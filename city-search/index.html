@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="City search">
+  <meta name="keywords" content="ajax, fetch, city search, js30">
+  <meta name="author" content="Vitalii Kalchuk">
+  <title>City Search</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+
+<script>
+  const endpoint = 'https://gist.githubusercontent.com/Keaws/7d021a39ee992d4d723d612193221dc6/raw/461f7ea5f5c38ae74516af85bf0a18c4bb22483f/cities.json';
+
+  const cities = [];
+
+  fetch(endpoint)
+    .then(response => response.json())
+    .catch(e => console.log(e))
+    .then(data => cities.push(...data));
+
+  function findMatches (wordToMatch, cities) {
+    return cities.filter(city => {
+      const regexp = new RegExp(wordToMatch, 'gi');
+      return city.city.match(regexp) || city.state.match(regexp);
+    });
+  }
+
+  const searchField = document.querySelector('.search');
+  const suggestions = document.querySelector('.suggestions');
+
+  searchField.addEventListener('keyup', displayMatches);
+
+  function displayMatches () {
+    const matches = findMatches(this.value, cities);
+    const html = matches.map(city => {
+      const regex = new RegExp(this.value, 'gi');
+      const cityName = city.city.replace(regex, `<span class="hl">${this.value}</span>`)
+      const stateName = city.state.replace(regex, `<span class="hl">${this.value}</span>`)
+
+      return `
+          <li>
+            <span class="name"> ${cityName} ${stateName} </span>
+            <span class="population"> ${new Number(city.population).toLocaleString('en-us')} </span>
+          </li>
+        `
+    }).join('');
+
+    suggestions.innerHTML = html;
+  }
+  
+
+</script>
+  </body>
+</html>
