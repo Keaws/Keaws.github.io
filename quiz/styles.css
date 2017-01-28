@@ -1,0 +1,21 @@
+.skip,
+.next {
+  width:60%;
+  margin-bottom:15px;
+  margin-top:15px;
+}
+
+a.letter {
+  border:1px solid black;
+  margin-right: 5px;
+  margin-bottom: 15px;
+}
+
+.answer-block {
+  min-height: 300px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}

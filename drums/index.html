@@ -6,7 +6,7 @@
   <meta name="description" content="js drums whiplash">
   <meta name="keywords" content="HTML, CSS, JavaScript, drums, whiplash, js30">
   <meta name="author" content="Vitalii Kalchuk">
-  
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -63,25 +63,25 @@
 
 <script>
 	window.addEventListener('keydown', playSound);
-							
+
 	function playSound(e) {
 		const keyContainer = document.querySelector(`div[data-key="${e.keyCode}"]`);
 		const audioEl = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-		
+
 		if (!audioEl) return;
-		
+
 		audioEl.currentTime = 0;
 		audioEl.play();
-		
+
 		keyContainer.classList.add('playing');
 	}
-	
+
 	const keys = document.querySelectorAll('.key');
 	keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-	
+
 	function removeTransition(e) {
 		if (e.propertyName !== 'transform') return;
-		
+
 		this.classList.remove('playing');
 	}
 
