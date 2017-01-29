@@ -1,4 +1,4 @@
-const questionAPI = 'http://jservice.io/api/random';
+const questionAPI = 'https://jservice.io/api/random';
 let currentQuestion;
 let parsedAnswer;
 
