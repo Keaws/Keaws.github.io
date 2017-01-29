@@ -1,3 +1,4 @@
+//use http if you are running this locally
 const questionAPI = 'https://jservice.io/api/random';
 let currentQuestion;
 let parsedAnswer;
