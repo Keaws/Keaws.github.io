@@ -26,7 +26,7 @@
         if(weather) {
           let city = weather[0].split(' ')[2];
 
-          fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=e659df8d528a4a19ebb199810cd59ddd`)
+          fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=e659df8d528a4a19ebb199810cd59ddd`)
                 .then(response => response.json())
                 .catch(e => console.log(e))
                 .then(data => showWeather(data));
