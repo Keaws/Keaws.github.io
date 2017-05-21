@@ -1,5 +1,7 @@
 // Define some variables used to remember state.
-var playlistId, channelId, songs, currentVideoId;
+let playlistId, channelId, songs, currentVideoId, currentSongIndex = 0;
+
+const statusEl = document.getElementById('status');
 
 // After the API loads, call a function to enable the playlist creation form.
 function handleAPILoaded() {
@@ -13,7 +15,7 @@ function enableForm() {
 
 function IsJsonString(str) {
     var jsonResult;
-  
+
     try {
         jsonResult = JSON.parse(str);
     } catch (e) {
@@ -23,36 +25,27 @@ function IsJsonString(str) {
 }
 
 function importMusic() {
-  let songIndex = 0;
-
   createPlaylist()
-    .then(playlistResponse => {
-      console.log('pl created');
-      return playlistResponse;
-    })
-    .then(playlistResponse => {
-        addSongs(songIndex);
-    });
+    .then(addSongs);
 }
 
-function addSongs(index) {
-  search(`${songs[index].artist} - ${songs[index].song}`)
-    .then(searchResponse => {
-      console.log('search done');
-      console.log(searchResponse);
-      return searchResponse;
-    })
-    .then(searchResponse => {
-      return addToPlaylist();
-    })
+function addSongs() {
+  let query = `${songs[currentSongIndex].artist} - ${songs[currentSongIndex].song}`;
+
+  search(query)
+    .then(addToPlaylist)
     .then(addtoPlayListResponse => {
       console.log(addtoPlayListResponse);
       console.log('added to playlist');
-      index++;
-      if (index < songs.length) {
-        addSongs(index);
+      currentSongIndex++;
+      if (currentSongIndex < songs.length) {
+        addSongs();
       } else {
         console.log('\nfinished');
+        let playlistLink = document.createElement('div');
+        playlistLink.innerHTML = `<a target="_blank" href="https://www.youtube.com/playlist?list=${playlistId}">Open playlist</a>`;
+        statusEl.insertBefore(playlistLink, statusEl.firstChild);
+        currentSongIndex = 0;
         return;
       }
     });
@@ -61,12 +54,12 @@ function addSongs(index) {
 // Create a private playlist.
 function createPlaylist() {
   songs = IsJsonString(document.getElementById('songs').value)
-  
+
   if (!songs) {
     $('#status').html('Invalid data format');
     return;
   }
-  
+
   var request = gapi.client.youtube.playlists.insert({
     part: 'snippet,status',
     resource: {
@@ -116,7 +109,9 @@ function addToPlaylist() {
       request.execute(function(response) {
         if (response.result) {
             resolve(response.result);
-            $('#status').html('<pre>' + JSON.stringify(response.result) + '</pre>');
+            let videoAddedEl = document.createElement('div');
+            videoAddedEl.innerText = `Added ${response.result.snippet.title}`;
+            statusEl.insertBefore(videoAddedEl, statusEl.firstChild);
         } else {
             reject(response);
             console.log('fail');
@@ -124,11 +119,10 @@ function addToPlaylist() {
       });
   });
 
-
 }
 
 // Search for a specified string.
-function search(query) {  
+function search(query) {
   var request = gapi.client.youtube.search.list({
     q: query,
     part: 'snippet',
@@ -138,12 +132,10 @@ function search(query) {
   return new Promise((resolve, reject) => {
       request.execute(function(response) {
         var result = response.result;
-               
+
         if (result) {
           currentVideoId = result.items[0].id.videoId;
           resolve(result);
-
-          //addToPlaylist(videoId);
         } else {
           $('#status').html('Could not search');
           reject(result);

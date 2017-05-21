@@ -8,7 +8,7 @@ paste in console
 press Enter
 
 
-const audioRows = document.querySelectorAll('.audio_row');
+let audioRows = document.querySelectorAll('.audio_row');
 
 let songs = [];
 
