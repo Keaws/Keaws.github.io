@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Playlist Updates</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div id="login-container" class="pre-auth">This application requires access to your YouTube account.
@@ -41,9 +42,14 @@
           }
         ]
       </textarea>
+      <br>
       <button id="playlist-button" onclick="importMusic()" disabled>Create playlist</button>
     </div>
-
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+        <span>Please wait<span class="dotdotdot"></span></span>
+      </div>
+    </div>
     <div id="status">
 
     </div>
