@@ -93,7 +93,7 @@ function createPlaylist() {
     return;
   }
 
-  showProgressBar();  
+  showProgressBar();
 
   var request = gapi.client.youtube.playlists.insert({
     part: 'snippet,status',
@@ -116,7 +116,17 @@ function createPlaylist() {
 
           resolve(result);
         } else {
-          $('#status').html('Could not create playlist');
+          let err = document.createElement('div');
+          err.style.color = 'red';
+          err.innerHTML = `<p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Failed to create playlist. Make sure Library is available in your channel.</p>
+          <img src="assets/youtube-library-err.png" alt="library error" />
+          <p>If it is not available, click My channel, then Create</p>
+          <img src="assets/youtube-library-err2.png" alt="library error - my channel" />`
+          ;
+          statusEl.insertBefore(err, statusEl.firstChild);
+
+          hideProgressBar();
+
           reject(result);
         }
     });
@@ -187,6 +197,10 @@ function search(query) {
 
 function showProgressBar() {
   progressBarContainer.style.display = 'block';
+}
+
+function hideProgressBar() {
+  progressBarContainer.style.display = 'none';
 }
 
 function toggleProgressBar() {
