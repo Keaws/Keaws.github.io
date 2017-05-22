@@ -215,10 +215,11 @@ function updateProgressBar() {
 function showFailedSongsIfAny() {
     if (errorQueries.length > 0) {
       let failDetailsEl = document.createElement('details');
-      failDetailsEl.style.outline = 'none';
       let failDetailsSummary = document.createElement('summary');
 
       failDetailsSummary.style.color = 'orangered';
+      failDetailsSummary.style.outline = 'none';
+      failDetailsSummary.style.cursor = 'pointer';
       failDetailsSummary.innerText = 'Click to see what songs didn\'t make it:';
       failDetailsEl.appendChild(failDetailsSummary);
       for (let fail of errorQueries) {
