@@ -4,10 +4,26 @@
 
 body {
     margin: 0 auto;
-    width: 40rem;
+    width: 45rem;
     padding: 1rem;
     padding-top: 2rem;
     text-align: center;
+}
+
+.actions {
+  text-align: initial;
+}
+
+.actions textarea {
+  white-space: normal;
+  text-align: left;
+  -moz-text-align-last: center; /* Firefox 12+ */
+  text-align-last: left;
+  resize: none;
+}
+
+.actions li {
+  padding: .5rem;
 }
 
 .progress {

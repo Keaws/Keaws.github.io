@@ -8,6 +8,10 @@ const progressBarContainer = document.querySelector('.progress');
 const progressBarEl = document.querySelector('.progress-bar-striped');
 const progressText = document.querySelector('.progress-text');
 const playlistButton = document.getElementById('playlist-button');
+const copyButton = document.querySelector('.fn-copy-to-clipboard');
+const codeToCopyArea = document.querySelector('.actions textarea');
+
+copyButton.addEventListener('click', (e) => { copyToClipboard(); });
 
 // After the API loads, call a function to enable the playlist creation form.
 function handleAPILoaded() {
@@ -197,6 +201,7 @@ function updateProgressBar() {
 function showFailedSongsIfAny() {
     if (errorQueries.length > 0) {
       let failDetailsEl = document.createElement('details');
+      failDetailsEl.style.outline = 'none';
       let failDetailsSummary = document.createElement('summary');
 
       failDetailsSummary.style.color = 'orangered';
@@ -211,4 +216,11 @@ function showFailedSongsIfAny() {
 
       statusEl.insertBefore(failDetailsEl, statusEl.firstChild);
   }
+}
+
+function copyToClipboard() {
+  codeToCopyArea.disabled = false;
+  codeToCopyArea.select();
+  document.execCommand('copy');
+  codeToCopyArea.disabled = true;
 }
