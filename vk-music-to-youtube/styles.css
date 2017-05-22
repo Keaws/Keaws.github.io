@@ -2,9 +2,17 @@
   box-sizing: border-box;
 }
 
+body {
+    margin: 0 auto;
+    width: 40rem;
+    padding: 1rem;
+    padding-top: 2rem;
+    text-align: center;
+}
+
 .progress {
     margin: 15px;
-    height: 20px;
+    height: 25px;
     margin-bottom: 20px;
     overflow: hidden;
     background-color: #f5f5f5;
@@ -17,7 +25,7 @@
   float: left;
     width: 0;
     height: 100%;
-    font-size: 12px;
+    font-size: 20px;
     line-height: 20px;
     color: #fff;
     text-align: center;
@@ -29,9 +37,23 @@
     transition: width .6s ease;
 }
 
+.progress-bar span {
+  vertical-align: middle;
+  font-weight: 700;
+}
+
 .progress .progress-bar.active {
-    font-weight: 700;
     animation: progress-bar-stripes .5s linear infinite;
+}
+
+.progress .progress-bar.finished {
+    animation: none;
+    background-color: #BADA55;
+}
+
+.progress .progress-bar.finished .dotdotdot:after {
+    content: '';
+    animation: none;
 }
 
 .progress-bar-striped {
