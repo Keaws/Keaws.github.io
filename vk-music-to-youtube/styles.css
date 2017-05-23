@@ -20,6 +20,7 @@ body {
   -moz-text-align-last: center; /* Firefox 12+ */
   text-align-last: left;
   resize: none;
+  vertical-align: top;
 }
 
 .actions li {
