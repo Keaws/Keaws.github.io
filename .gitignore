@@ -1,0 +1,13 @@
+**/node_modules
+**/lib
+**/examples/*/build
+**/tests/output
+**/.DS_Store
+**/npm-debug.log
+**/key.pem
+**/cert.pem
+**/lighthouse.*/
+**/tmp-*.json
+**/yarn.lock
+**/package-lock.json
+**/build
