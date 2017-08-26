@@ -29,7 +29,9 @@ export class Profile extends Component {
 			<div>
 				{loading
 					? <p>Fetching...</p>
-					: repos.map(repo => <Repo {...repo} />)
+          : repos.length > 0
+              ? repos.map(repo => <Repo {...repo} />) 
+              : <p>{this.props.user} doesn’t have any public repositories yet.</p>
 				}
 			</div>
 		)
