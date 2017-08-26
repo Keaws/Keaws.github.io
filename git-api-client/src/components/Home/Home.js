@@ -1,12 +1,15 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import linkState from 'linkstate';
+import { PATH } from '../../path/path';
 
 export class Home extends Component {
 	getRepos(e) {
-		e.preventDefault();
+    e.preventDefault();
 
-		route(`/${encodeURIComponent(this.state.query)}`);
+    let routePath = PATH.length > 1 ? PATH : '';
+    
+		route(`${routePath}/${encodeURIComponent(this.state.query)}`);
 	}
 
 	render() {
