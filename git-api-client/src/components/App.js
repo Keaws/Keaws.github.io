@@ -9,13 +9,13 @@ import { PATH } from '../path/path';
 export default class App extends Component {
 	render() {
 		return (
-			<div id="app">
+			<main id="app">
 				<Router>
 					<Home path={PATH} />
 					<Profile path={PATH + '/:user'} />
 					<Error default />
 				</Router>
-			</div>
+			</main>
 		);
 	}
 }

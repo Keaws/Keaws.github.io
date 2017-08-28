@@ -1,14 +1,14 @@
 import { h } from 'preact';
 
-export function Repo (props) {
+export function Repo ( {name, description, fork, stargazers_count, pushed_at, language} ) {
 	return (
 		<div>
-			<p>Name: {props.name}</p>
-			<p>Description: {props.description}</p>
-			<p>Forked: {props.fork.toString()}</p>
-			<p>Stars: {props.stargazers_count}</p>
-			<p>Updated: {props.pushed_at}</p>
-			<p>Language: {props.language}</p>
+			<p>Name: {name}</p>
+			<p>Description: {description}</p>
+			<p>Forked: {fork.toString()}</p>
+			<p>Stars: {stargazers_count}</p>
+			<p>Updated: {pushed_at}</p>
+			<p>Language: {language}</p>
 			<br />
 		</div>
 	)

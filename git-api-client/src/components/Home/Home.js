@@ -14,12 +14,10 @@ export class Home extends Component {
 
 	render() {
 		return (
-			<div>
-				<form onSubmit={this.getRepos.bind(this)}>
-					<input type="text" onInput={linkState(this, 'query')} placeholder="e.g. Kottans"/>
-					<input type="submit" value="Submit" />
-				</form>
-			</div>
+			<form onSubmit={this.getRepos.bind(this)}>
+				<input type="text" onInput={linkState(this, 'query')} placeholder="e.g. Kottans"/>
+				<input type="submit" value="Submit" />
+			</form>
 		);
 	}
 }

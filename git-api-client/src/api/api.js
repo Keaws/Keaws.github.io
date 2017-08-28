@@ -4,7 +4,11 @@ const getReposURL = (user) => {
 
 class API {
 	static getRepos(user) {
-		return fetch(getReposURL(user));
+		return fetch(getReposURL(user), {
+      headers: {
+        'Accept': 'application/vnd.github.mercy-preview+json'
+      }
+    });
 	}
 }
 
