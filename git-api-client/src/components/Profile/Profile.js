@@ -4,6 +4,7 @@ import API from '../../api/api';
 import { FILTER_TYPE, DEFAULT_FILTERS, Filters } from '../Filters/Filters';
 import ReposList from '../ReposList/ReposList';
 import Sorting from '../Sorting/Sorting';
+import LoadMoreButton from '../LoadMoreButton/LoadMoreButton';
 
 export class Profile extends Component {
 	constructor(props) {
@@ -17,24 +18,33 @@ export class Profile extends Component {
       sorting: {
         by: 'name',
         order: 'asc'
-      }
+      },
+      currentPage: 1
 		}
-	}
+  }
 
-	componentDidMount() {
-		API.getRepos(this.props.user)
-			.then(res => res.json())
-			.then(repos => {
-				this.setState({
-					repos,
-          loading: false,
-          languages: [...new Set(
-            repos.map(r => r.language).filter(l => l)
-          )]
-        });
-        console.log(repos);
-			})
-			.catch(err => console.error(err));
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    });
+  }
+  
+	async componentDidMount() {
+    try {
+      const res = await API.getRepos(this.props.user, this.state.currentPage);
+      const shouldDisplayLoadMore = res.headers.get('Link') && res.headers.get('Link').includes('rel="next"');
+      const repos = await res.json();
+
+      await this.setStateAsync({
+        repos,
+        shouldDisplayLoadMore,
+        loading: false,
+        languages: [...new Set(repos.map(r => r.language).filter(l => l))]
+      });
+      console.log(this.state);
+    } catch (err) {
+      console.error(err);
+    }
   }
   
   _changeFilter(type, state) {
@@ -74,18 +84,18 @@ export class Profile extends Component {
     });
   }
 
-  _sortRepos(repos, {by, order}) {
-    let sorted = [];
+  _getSortedRepos(repos, {by, order}) {
+    const sorted = [...repos];
 
     switch (by) {
       case 'name':
-        sorted = repos.sort((a,b) => a[by].localeCompare(b[by]));
+        sorted.sort((a, b) => a[by].localeCompare(b[by]));
         break;
       case 'pushed_at':
-        sorted = repos.sort((a,b) => new Date(a[by]) - new Date(b[by]));
+        sorted.sort((a, b) => new Date(a[by]) - new Date(b[by]));
         break;
       default:
-        sorted = repos.sort((a,b) => a[by] - b[by]);
+        sorted.sort((a, b) => a[by] - b[by]);
         break;
     }
 
@@ -94,9 +104,34 @@ export class Profile extends Component {
     return sorted;
   }
 
-	render({}, {loading, repos, filters, languages, sorting}) {
+  async _loadMore () {
+    this.setState({loading: true});
+
+    try {
+      console.log('loading more');
+      const res = await API.getRepos(this.props.user, this.state.currentPage + 1);
+      const shouldDisplayLoadMore = res.headers.get('Link').includes('rel="next"');
+      const newRepos = await res.json();
+  
+      await this.setStateAsync({
+        repos: [...this.state.repos, ...newRepos],
+        shouldDisplayLoadMore,
+        currentPage: this.state.currentPage + 1,
+        loading: false,
+        languages: [
+          ...this.state.languages,
+          ...[...new Set(newRepos.map(r => r.language).filter(l => l))]
+        ]
+      });
+      console.log(this.state);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+	render({}, {loading, repos, filters, languages, sorting, shouldDisplayLoadMore}) {
     const filteredRepos = repos && this._getFilteredRepos(filters);
-    const sortedRepos = repos && this._sortRepos(filteredRepos, sorting);
+    const sortedRepos = repos && this._getSortedRepos(filteredRepos, sorting);
 
 		return (
 			<div>
@@ -116,6 +151,10 @@ export class Profile extends Component {
                   onSortOrder={this._changeSortOrder.bind(this)} />
                   
                 <ReposList repos={sortedRepos} />
+
+                <LoadMoreButton
+                  shouldDisplayLoadMore={shouldDisplayLoadMore}
+                  onLoadMore={this._loadMore.bind(this)} />
 							</div>
 						)
 						: <p>{this.props.user} doesn’t have any public repositories yet.</p>
