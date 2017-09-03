@@ -1,6 +1,6 @@
-#[Demo](https://keaws.github.io/git-api-client/)
+# [Demo](https://keaws.github.io/git-api-client/)
 
-#Install
+## Install
 ```
 npm i
 npm start
