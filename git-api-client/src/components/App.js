@@ -5,6 +5,7 @@ import Home from './Home/Home';
 import Profile from './Profile/Profile';
 import Error from './Error/Error';
 import { PATH } from '../path/path';
+import './App.css';
 
 export default class App extends Component {
 	render() {

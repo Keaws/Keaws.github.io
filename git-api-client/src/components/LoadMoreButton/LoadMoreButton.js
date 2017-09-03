@@ -1,5 +1,4 @@
 import { h } from 'preact';
-import './LoadMoreButton.css';
 
 export default function LoadMoreButton ( { shouldDisplayLoadMore } ) {
 	return (
