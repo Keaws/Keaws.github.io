@@ -8,7 +8,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'GitHub API',
-      template: 'src/index.html'
+      template: 'src/index.html',
+      favicon: 'src/favicon.ico'
     })
   ],
 
@@ -36,6 +37,12 @@ module.exports = {
           'style-loader',
           'css-loader'
         ] 
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
       }
     ]
   },

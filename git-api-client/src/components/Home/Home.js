@@ -1,22 +1,44 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
-import linkState from 'linkstate';
-import { PATH } from '../../path/path';
+import { HOME_ROUTE } from '../../path/path';
+import './Home.css';
 
 export class Home extends Component {
 	getRepos(e) {
     e.preventDefault();
 
-    let routePath = PATH.length > 1 ? PATH : '';
-    
-		route(`${routePath}/${encodeURIComponent(this.state.query)}`);
+    const form = new FormData(document.querySelector('.search-form'));
+    const inputValue = form.get('query').trim();
+
+    if (inputValue && /^\w*$/.test(inputValue)) {
+      route(`${HOME_ROUTE}/${encodeURIComponent(inputValue)}`);      
+    }
 	}
 
 	render() {
 		return (
-			<form onSubmit={this.getRepos.bind(this)}>
-				<input type="text" onInput={linkState(this, 'query')} placeholder="e.g. Kottans"/>
-				<input type="submit" value="Submit" />
+      <form
+        class="search-form" 
+        onSubmit={this.getRepos.bind(this)}>
+        <fieldset>
+          <legend>Enter Git Repository Name</legend>
+          <input
+            name="query"
+            autofocus 
+            class="query" 
+            type="text" 
+            placeholder="e.g. Kottans"/>
+
+          <br />
+
+          <button
+            name="submit-button"
+            class="btn"
+            type="submit"
+            value="I'm feeling lucky!">
+            I'm feeling lucky!
+          </button>
+        </fieldset>
 			</form>
 		);
 	}

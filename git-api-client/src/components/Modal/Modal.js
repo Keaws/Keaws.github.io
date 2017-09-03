@@ -120,14 +120,14 @@ export class Modal extends Component {
             {loading
               ? <p>Fetching...</p>
               : <div>
-                  <p><a href={repo.html_url}>{repo.name}</a></p>
+                  <p><a target="_blank" href={repo.html_url}>{repo.name}</a></p>
                   {source_url && 
-                    <p>Forked from <a href={source_url}>{source_full_name}</a></p>}
+                    <p>Forked from <a target="_blank" href={source_url}>{source_full_name}</a></p>}
   
                   <p>Top contributors</p>
                   {contributors.map(c => <ul>
                     <li>
-                      <a href={c.html_url}>{c.login}</a> | {c.contributions}
+                      <a target="_blank" href={c.html_url}>{c.login}</a> | {c.contributions}
                     </li>
                   </ul>)}
 
@@ -140,7 +140,7 @@ export class Modal extends Component {
                   <p class={!pullRequests.length && 'hidden'}>Popular pull requests</p>
                   {pullRequests.length > 0 && pullRequests.map(pr => <ul>
                       <li>
-                        <a href={pr.html_url}>{pr.title}</a>
+                        <a target="_blank" href={pr.html_url}>{pr.title}</a>
                       </li>
                     </ul>)
                   }

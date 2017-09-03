@@ -1,4 +1,6 @@
 import { h, Component } from 'preact';
+import { route } from 'preact-router';
+import { HOME_ROUTE } from '../../path/path';
 import Repo from '../Repo/Repo';
 import API from '../../api/api';
 import { FILTER_TYPE, DEFAULT_FILTERS, Filters } from '../Filters/Filters';
@@ -108,7 +110,6 @@ export class Profile extends Component {
     this.setState({loading: true});
 
     try {
-      console.log('loading more');
       const res = await API.getRepos(this.props.user, this.state.currentPage + 1);
       const shouldDisplayLoadMore = res.headers.get('Link').includes('rel="next"');
       const newRepos = await res.json();
@@ -139,7 +140,14 @@ export class Profile extends Component {
 					? <p>Fetching...</p>
         			: repos.length > 0
 						? (
-							<div>
+              <div>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    route(`${HOME_ROUTE}/`)
+                  }}>Back to search
+                </a>
+
                 <Filters 
                   languages={languages} 
                   filters={filters} 
