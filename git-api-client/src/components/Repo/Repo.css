@@ -1,0 +1,35 @@
+.card {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),
+                0 4px 20px 0 rgba(0,0,0,0.19);
+    
+    text-align: left;
+    margin-bottom: 2rem;
+    word-break: break-word;
+}
+
+.card header {
+    padding: 0.01em 16px;
+    color: #000;
+    background-color: #f1f1f1;
+}
+
+.card header:hover {
+    cursor: pointer;
+}
+
+.card h3 {
+    font-size: 20px;
+}
+
+.card__container {
+    padding: 0.01em 16px;
+    
+}
+
+.icon {
+    vertical-align: sub;
+}
+
+.card__details span {
+    margin-right: 16px;
+}

@@ -120,9 +120,9 @@ export class Modal extends Component {
             {loading
               ? <p>Fetching...</p>
               : <div>
-                  <p><a target="_blank" href={repo.html_url}>{repo.name}</a></p>
+                  <h1><a target="_blank" href={repo.html_url}>{repo.name}</a></h1>
                   {source_url && 
-                    <p>Forked from <a target="_blank" href={source_url}>{source_full_name}</a></p>}
+                    <h4 class="forked">Forked from <a target="_blank" href={source_url}>{source_full_name}</a></h4>}
   
                   <p>Top contributors</p>
                   {contributors.map(c => <ul>

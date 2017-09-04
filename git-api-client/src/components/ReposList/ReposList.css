@@ -1,0 +1,10 @@
+.repos-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.repo {
+    margin: 1rem;
+    flex: 1 0 auto;
+    max-width: 45%;
+}

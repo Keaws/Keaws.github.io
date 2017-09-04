@@ -1,5 +1,8 @@
 import { h, Component } from 'preact';
 import Modal from '../Modal/Modal';
+import './Repo.css';
+import Star from './Star.svg';
+import Fork from './Fork.svg';
 
 export class Repo extends Component {
   constructor(props) {
@@ -20,14 +23,31 @@ export class Repo extends Component {
  
   render ({id, name, description, fork, stargazers_count, pushed_at, language}, {shouldShowModal}) {
     return (
-      <div onClick={this._toggleModal.bind(this)}>
-        <p>Name: {name}</p>
-        <p>Description: {description}</p>
-        <p>Forked: {fork.toString()}</p>
-        <p>Stars: {stargazers_count}</p>
-        <p>Updated: {pushed_at}</p>
-        <p>Language: {language}</p>
-        <br />
+      <div class="card">
+        <header onClick={this._toggleModal.bind(this)}><h3>{name}</h3></header>
+
+        <div class="card__container">
+          <p>{description}</p>
+
+          <div class="card__details">
+            {fork && <span>
+              <Fork />
+            </span>}
+
+            <span><Star /> {stargazers_count}</span>
+
+            {language && <span>
+              {language}
+            </span>}
+
+            <p>Updated on 
+              <time datetime={pushed_at}>&nbsp;
+                {new Date(pushed_at).toDateString()}
+              </time>
+            </p>
+          </div>
+        </div>
+
         <Modal
           shouldShowModal={shouldShowModal}
           repo={this.props}

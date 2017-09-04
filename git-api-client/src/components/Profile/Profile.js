@@ -107,8 +107,6 @@ export class Profile extends Component {
   }
 
   async _loadMore () {
-    this.setState({loading: true});
-
     try {
       const res = await API.getRepos(this.props.user, this.state.currentPage + 1);
       const shouldDisplayLoadMore = res.headers.get('Link').includes('rel="next"');
@@ -118,7 +116,6 @@ export class Profile extends Component {
         repos: [...this.state.repos, ...newRepos],
         shouldDisplayLoadMore,
         currentPage: this.state.currentPage + 1,
-        loading: false,
         languages: [
           ...this.state.languages,
           ...[...new Set(newRepos.map(r => r.language).filter(l => l))]
