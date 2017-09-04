@@ -1,9 +1,10 @@
 import { h } from 'preact';
+import './Sorting.css';
 
 export default function Sorting ( { sortingParams } ) {
     return (
-      <div>
-          <span>Sort by</span>
+      <div class="display-settings">
+          <h2>Sorting:</h2>
           <select onChange={(e) => this.props.onSortType(e.target.value)}>
             <option value="name"
               selected={!sortingParams.by || sortingParams.by === 'name'}>
@@ -23,17 +24,12 @@ export default function Sorting ( { sortingParams } ) {
             </option>
           </select>
 
-          <span>Order</span>
-          <select onChange={(e) => this.props.onSortOrder(e.target.value)}>
-            <option value="asc" 
-              selected={!sortingParams.order || sortingParams.order === 'asc'}>
-              Ascending
-            </option>
-            <option value="desc" 
-              selected={sortingParams.order === 'desc'}>
-              Descending
-            </option>
-          </select>
+          <button 
+            class="order"
+            onClick={(e) => this.props.onSortOrder(e.target.value)}
+            value={(!sortingParams.order || sortingParams.order === 'asc') ? 'asc' : 'desc'}>
+            {(!sortingParams.order || sortingParams.order === 'asc') ? '🠉' : '🠋'}
+          </button>
       </div>
     )
 }

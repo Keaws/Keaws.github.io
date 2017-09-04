@@ -63,7 +63,10 @@ export class Profile extends Component {
 
   _changeSortOrder(order) {
     this.setState({
-      sorting: { ...this.state.sorting, order: order }
+      sorting: { 
+        ...this.state.sorting, 
+        order: order === 'desc' ? 'asc' : 'desc' 
+      }
     });
   }
 
@@ -138,12 +141,15 @@ export class Profile extends Component {
         			: repos.length > 0
 						? (
               <div>
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    route(`${HOME_ROUTE}/`)
-                  }}>Back to search
-                </a>
+                <div class="back">
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      route(`${HOME_ROUTE}/`)
+                    }}>« Back to search
+                  </a>
+                </div>
+
 
                 <Filters 
                   languages={languages} 

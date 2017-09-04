@@ -124,23 +124,41 @@ export class Modal extends Component {
                   {source_url && 
                     <h4 class="forked">Forked from <a target="_blank" href={source_url}>{source_full_name}</a></h4>}
   
-                  <p>Top contributors</p>
-                  {contributors.map(c => <ul>
-                    <li>
-                      <a target="_blank" href={c.html_url}>{c.login}</a> | {c.contributions}
-                    </li>
-                  </ul>)}
+                  <table>
+                    <tr>
+                      <th>User</th>
+                      <th>Contributions</th>
+                    </tr>
 
-                  <p>Languages</p>
-                  {
-                    Object.keys(languages).map(lang => <ul>
-                      <li>{lang} | {languages[lang]}</li>
-                  </ul>)}
+                    {contributors.map(c => <tr>
+                        <td>
+                          <a target="_blank" href={c.html_url}>{c.login}</a>
+                        </td>
+                        <td>
+                          <span>{c.contributions}</span>
+                        </td>
+                    </tr>)}
+                  </table>
+                  
+                  {Object.keys(languages).length > 0 &&
+                    <table>
+                      <tr>
+                        <th>Language</th>
+                        <th>Size</th>
+                      </tr>
 
-                  <p class={!pullRequests.length && 'hidden'}>Popular pull requests</p>
+                      {
+                        Object.keys(languages).map(lang => <tr>
+                          <td>{lang}</td>
+                          <td>{languages[lang]}</td>
+                      </tr>)}
+                    </table>
+                  }
+                  
+                  <h3 class={!pullRequests.length && 'hidden'}>Popular pull requests</h3>
                   {pullRequests.length > 0 && pullRequests.map(pr => <ul>
                       <li>
-                        <a target="_blank" href={pr.html_url}>{pr.title}</a>
+                        <p><a target="_blank" href={pr.html_url}>{pr.title}</a></p>
                       </li>
                     </ul>)
                   }

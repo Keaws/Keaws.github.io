@@ -22,3 +22,14 @@
 .modal .forked {
   color: #aeaeae;
 }
+
+.modal table {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.modal th,
+.modal td {
+  text-align: center;
+  width: 50%;
+}

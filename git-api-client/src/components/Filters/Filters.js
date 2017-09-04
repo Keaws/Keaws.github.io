@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import './Filters.css';
 
 const FILTER_TYPE = {
   HAS_OPEN_ISSUES: 'HAS_OPEN_ISSUES',
@@ -20,57 +21,9 @@ const DEFAULT_FILTERS = {
 
 function Filters ( { filters, languages } ) {
     return (
-      <div>
-          <p>Filters:</p>
+      <div class="display-settings display-settings__filters">
+          <h2>Filters:</h2>
           <ul>
-              <li>
-                <label>
-                  Has open issues
-                  <input
-                      type="checkbox"
-                      checked={filters.HAS_OPEN_ISSUES}
-                      onClick={(e) => this.props.onFilter(
-                        FILTER_TYPE.HAS_OPEN_ISSUES, e.target.checked
-                      )}/>
-                </label>
-              </li>
-              
-              <li>
-                <label>
-                  Has topics
-                  <input
-                      type="checkbox"
-                      checked={filters.HAS_TOPICS}
-                      onClick={(e) => this.props.onFilter(
-                        FILTER_TYPE.HAS_TOPICS, e.target.checked
-                      )}/>
-                </label>
-              </li>
-
-              <li>
-                <label>
-                  Stars
-                  <input
-                      type="number"
-                      checked={filters.STARRED_TIMES}
-                      onInput={(e) => this.props.onFilter(
-                        FILTER_TYPE.STARRED_TIMES, e.target.value
-                      )}/>
-                </label>
-              </li>
-
-              <li>
-                <label>
-                  Updated after
-                  <input
-                      type="date"
-                      checked={filters.UPDATED_AFTER}
-                      onInput={(e) => this.props.onFilter(
-                        FILTER_TYPE.UPDATED_AFTER, e.target.value
-                      )}/>
-                </label>
-              </li>
-
               <li>
                 <span>Type</span>
                 <select onInput={(e) => this.props.onFilter(
@@ -110,6 +63,46 @@ function Filters ( { filters, languages } ) {
                     })
                   }
                 </select>
+              </li>
+
+              <li>
+                <label>Stars</label>
+                <input
+                  type="number"
+                  checked={filters.STARRED_TIMES}
+                  onInput={(e) => this.props.onFilter(
+                    FILTER_TYPE.STARRED_TIMES, e.target.value
+                  )}/>
+              </li>
+
+              <li>
+                <label>Updated after</label>
+                <input
+                  type="date"
+                  checked={filters.UPDATED_AFTER}
+                  onInput={(e) => this.props.onFilter(
+                    FILTER_TYPE.UPDATED_AFTER, e.target.value
+                  )}/>
+              </li>
+
+              <li>
+                <label>With issues</label>
+                <input
+                  type="checkbox"
+                  checked={filters.HAS_OPEN_ISSUES}
+                  onClick={(e) => this.props.onFilter(
+                    FILTER_TYPE.HAS_OPEN_ISSUES, e.target.checked
+                  )}/>
+              </li>
+
+              <li>
+                <label>With topics</label>
+                <input
+                  type="checkbox"
+                  checked={filters.HAS_TOPICS}
+                  onClick={(e) => this.props.onFilter(
+                    FILTER_TYPE.HAS_TOPICS, e.target.checked
+                  )}/>
               </li>
           </ul>
       </div>
